@@ -5,17 +5,24 @@
         <title>Etch-a-Sketch</title>
     </head>
     <body>
-        <h1>Etch-a-Sketch</h1>
+        <h1>Mouse-a-Sketch</h1>
         <nav>
-            <button>Reset</button>
-            <p>Size:</p>
-            <input type="range" min="4" max="100" value="4" class="slider" id="range">
+            <button id='clear'>Clear</button>
+            <button id='rainbow'>Rainbow</button>
+            <button id='erase'>Erase</button>
+            <nav class='color-container'>
+                <span>Colour</span>
+                <input type="color" id="color-input">
+            </nav>
         </nav>
         <main>
             <section class="grid-container"> 
             </section>
-
         </main>
+        <nav>
+            <span>Size:</span>
+            <input type="range" min="4" max="100" value="4" id="slider">
+        </nav>
         <script src="script.js"></script>
     </body>
 </html>

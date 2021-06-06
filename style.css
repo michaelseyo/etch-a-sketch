@@ -10,6 +10,7 @@ h1 {
     color: rgb(80, 80, 80);
     text-align: center;
     font-size: 50px;
+    margin-bottom: 0;
 }
 
 nav {
@@ -27,7 +28,7 @@ nav button {
     background-color: white;
     border-radius: 10px;
     color:rgb(80, 80, 80);
-    font-size: 22px;
+    font-size: 18px;
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
@@ -36,30 +37,55 @@ nav button:hover {
     cursor: pointer;
 }
 
-nav p {
-    font-size: 20px;
-}
-nav .slider {
+nav #slider {
     margin-left: 10px;
+    margin-right: 10px;
     -webkit-appearance: none; /* remove default style */
-    width: 50%;
+    width: 40%;
     height: 15px;
     border-radius: 10px;
     outline: none;
     opacity: 0.8;
 }
 
-nav .slider:hover {
+nav #slider:hover {
     opacity: 1;
 }
 
-nav .slider::-webkit-slider-thumb { /* this is the circle in the slider */
+nav #slider::-webkit-slider-thumb { /* this is the circle in the slider */
     -webkit-appearance: none; /* remove default style */
     width: 25px;
     height: 25px;
     border-radius: 50%;
     background-color: rgb(255, 220, 220);
     cursor: pointer;
+}
+
+nav .color-container {
+    background-color: white;
+    height: 50px;
+    width: 100px;
+    border-radius: 10px;
+    margin: 0;
+}
+
+nav .color-container:hover {
+    box-shadow: 0 0 10px rgb(230, 230, 230);
+    cursor: pointer;
+}
+
+nav span {
+    font-size: 18px;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    color:rgb(80, 80, 80);
+}
+
+nav #color-input {
+    margin-left: 2px;
+    border-style: none;
+    padding: 0;
+    width: 20px;
+    height: 20px;
 }
 
 main {
@@ -70,8 +96,8 @@ main {
 
 .grid-container {
     display: grid;
-    grid-template-columns: auto auto auto auto;
-    grid-template-rows: auto auto auto auto;
+    grid-template-columns: repeat(4, auto); 
+    grid-template-rows: repeat(4, auto);
     /* size of the grid */
     height: 500px; 
     width: 500px;
@@ -80,8 +106,5 @@ main {
 
 div {
     background-color: rgb(255, 255, 255);
-}
-
-.coloured-div {
-    background-color: rgb(220, 220, 220);
+    margin-bottom: -1px; /* remove gap b/w rows in grid */
 }
