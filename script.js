@@ -1,34 +1,36 @@
 function setGrid() { 
-    // get current value
-    const size = document.querySelector("input").value; 
+    // initialize default size of 4x4 with black colour
+    const size = document.querySelector("#slider").value; 
     const gridContainer = document.querySelector(".grid-container");
     const totalSquares = size * size;
     const divs = document.querySelectorAll("div");
     const currentNum = divs.length;
     const numToFill = totalSquares - currentNum;
-    let propertyValue = "";
-
-    // the number of auto for grid property
-    for (i = 0; i < size; i++) {
-        propertyValue += "auto "
-    }
-    // remove the extra space
-    propertyValue.slice(0, -1);
+    let propertyValue = `repeat(${size}, auto)`;
     
-    // get the property: grid-template-column & row for class grid-container, then change value
+    // create equal squares for grid-style
     gridContainer.style.gridTemplateColumns = propertyValue;
     gridContainer.style.gridTemplateRows = propertyValue;
     
+    if (numToFill > 0 && !rainbow) {
+        createDivs(true, gridContainer, numToFill, setColourForOne);
+    } else if (numToFill > 0 && rainbow) {
+        createDivs(true, gridContainer, numToFill, setRainbowColourForOne);
+    } else if (numToFill < 0) {
+        createDivs(false, gridContainer, numToFill, null);
+    }
+}
+
+function createDivs(increase, gridContainer, numToFill, colourFunc) {
     let count = 0;
-    if (numToFill > 0) {
+    if (increase) {
         while (count < numToFill) {
             const square = document.createElement("div");
-            // add eventListener to every grid on hover, we will colour the grid
-            square.addEventListener("mouseover", colour);
+            square.addEventListener("mouseover", colourFunc); 
             gridContainer.appendChild(square);
             count++;
         }
-    } else if (numToFill < 0) {
+    } else {
         while (count < Math.abs(numToFill)) {
             // acts something like stack data structure; remove from latest
             const latestDiv = gridContainer.lastElementChild; 
@@ -38,36 +40,108 @@ function setGrid() {
     }
 }
 
-function colour() {
-    this.classList.add("coloured-div");
+function setButtons() {
+    setClearBtn();
+    setEraseBtn();
+    setColourBtn();
+    setRainbowBtn();
 }
 
-function removeColour(grid) {
-    grid.classList.remove("coloured-div");
+function setClearBtn() {
+    const clearBtn = document.querySelector("#clear");
+    clearBtn.addEventListener("click", clear);
 }
 
-function resetGrid() {
-    const grids = document.querySelectorAll("div");
-    grids.forEach(removeColour); // the argument going into removeColour is the grid in grids
+function clear() {
+    const grid = document.querySelectorAll("div");
+    grid.forEach(function(square) {
+        if (square.style) {
+            square.style.backgroundColor = "white";
+        }
+    }); 
 }
 
-function setButton() {
-    const btn = document.querySelector("button");
-    btn.addEventListener("click", resetGrid);
+function setEraseBtn() {
+    const eraseBtn = document.querySelector("#erase");
+    eraseBtn.addEventListener("click", erase);
+}
+
+function erase() {
+    const grid = document.querySelectorAll("div");
+    grid.forEach(square => square.addEventListener("mouseover", function() {
+        if (this.style) {
+            this.style.backgroundColor = "white";
+        }
+    }));
+}
+
+function setColourBtn() {
+    const colourBtn = document.querySelector(".color-container");
+    colourBtn.addEventListener("click", setColourForAll);
+    setColourOptions();
+}
+
+// for colour wheel
+function setColourOptions() {
+    const colourOption = document.querySelector("input#color-input");
+    colourOption.addEventListener("change", setColourForAll);
+}
+
+// for all squares
+function setColourForAll() { 
+    rainbow = false;
+    const grid = document.querySelectorAll("div");
+    const colour = document.querySelector("#color-input").value;
+    grid.forEach(square => square.addEventListener("mouseover", function () {
+        const colour = document.querySelector("#color-input").value;
+        this.style.backgroundColor = `${colour}`;
+    }));
+}
+
+// for a single square
+function setColourForOne() {
+    const colour = document.querySelector("#color-input").value;
+    this.style.backgroundColor = `${colour}`;
+}
+
+function setRainbowBtn() {
+    const rainbowBtn = document.querySelector("#rainbow");
+    rainbowBtn.addEventListener("click", setRainbowColour);
+}
+
+// for all squares, each square random colour
+function setRainbowColour() {
+    rainbow = true;
+    const grid = document.querySelectorAll("div");
+    grid.forEach(square => square.addEventListener("mouseover", function() {
+        const r = Math.floor(Math.random() * 256);
+        const g = Math.floor(Math.random() * 256);
+        const b = Math.floor(Math.random() * 256);
+        this.style.backgroundColor = `rgb(${r},${g},${b})`;
+    }));
+}
+
+// for a single square
+function setRainbowColourForOne() {
+    const r = Math.floor(Math.random() * 256);
+    const g = Math.floor(Math.random() * 256);
+    const b = Math.floor(Math.random() * 256);
+    this.style.backgroundColor = `rgb(${r},${g},${b})`;
 }
 
 function setSlider() {
-    const slider = document.querySelector("input");
-    slider.addEventListener("input", setGrid); // when slide, change grid size
-    slider.addEventListener("input", resetGrid); // if existing drawing, reset
+    const slider = document.querySelector("#slider");
+    slider.addEventListener("input", setGrid); 
+    slider.addEventListener("input", clear); 
 }
 
 function init() {
     setGrid();
-    setButton();
+    setButtons();
+    setColourOptions();
     setSlider();
 }
 
+let rainbow = false;
 // initialize with 4x4 grid
 init();
-
