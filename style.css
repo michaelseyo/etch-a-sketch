@@ -10,7 +10,15 @@ h1 {
     color: rgb(80, 80, 80);
     text-align: center;
     font-size: 50px;
-    margin-bottom: 0;
+    user-select: none;
+    position: relative; 
+    animation: enter 1.5s;
+}
+
+@keyframes enter {
+    0% {top: -120px; transform: scale(0.1);}
+    50% {top: 20px;}
+    100% {top: 0px; transform: scale(1);}
 }
 
 nav {
@@ -30,26 +38,72 @@ nav button {
     color:rgb(80, 80, 80);
     font-size: 18px;
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    transition: transform 0.5s; 
 }
 
 nav button:hover {
-    box-shadow: 0 0 10px rgb(230, 230, 230);
+    box-shadow: 0 1px 1px rgba(0, 0, 0, 0.12);
+    box-shadow: 0 2px 2px rgba(0, 0, 0, 0.12);
+    box-shadow: 0 4px 4px rgba(0, 0, 0, 0.12);
+    box-shadow: 0 8px 8px rgba(0, 0, 0, 0.12);
     cursor: pointer;
 }
 
+nav button:active {
+    transform: scale(1.2);
+}
+
+nav .color-container {
+    background-color: white;
+    height: 50px;
+    width: 100px;
+    border-radius: 10px;
+    margin: 0;
+    transition: transform 0.5s; 
+}
+
+nav .color-container:hover {
+    box-shadow: 0 1px 1px rgba(0, 0, 0, 0.12);
+    box-shadow: 0 2px 2px rgba(0, 0, 0, 0.12);
+    box-shadow: 0 4px 4px rgba(0, 0, 0, 0.12);
+    box-shadow: 0 8px 8px rgba(0, 0, 0, 0.12);
+    cursor: pointer;
+}
+
+nav .color-container:active {
+    transform: scale(1.2);
+}
+
+nav #color-input {
+    margin-left: 2px;
+    border-style: none;
+    padding: 0;
+    width: 20px;
+    height: 20px;
+}
+
+span {
+    font-size: 20px;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    color:rgb(80, 80, 80);
+    user-select: none; /* remove highlight on click */
+}
+
 nav #slider {
-    margin-left: 10px;
-    margin-right: 10px;
+    margin-left: 30px;
+    margin-right: 20px;
     -webkit-appearance: none; /* remove default style */
     width: 40%;
     height: 15px;
     border-radius: 10px;
     outline: none;
     opacity: 0.8;
+    transition: transform 0.5s; 
 }
 
 nav #slider:hover {
     opacity: 1;
+    transform: scale(1.15);
 }
 
 nav #slider::-webkit-slider-thumb { /* this is the circle in the slider */
@@ -59,33 +113,6 @@ nav #slider::-webkit-slider-thumb { /* this is the circle in the slider */
     border-radius: 50%;
     background-color: rgb(255, 220, 220);
     cursor: pointer;
-}
-
-nav .color-container {
-    background-color: white;
-    height: 50px;
-    width: 100px;
-    border-radius: 10px;
-    margin: 0;
-}
-
-nav .color-container:hover {
-    box-shadow: 0 0 10px rgb(230, 230, 230);
-    cursor: pointer;
-}
-
-nav span {
-    font-size: 18px;
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    color:rgb(80, 80, 80);
-}
-
-nav #color-input {
-    margin-left: 2px;
-    border-style: none;
-    padding: 0;
-    width: 20px;
-    height: 20px;
 }
 
 main {
